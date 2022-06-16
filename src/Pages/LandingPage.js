@@ -22,7 +22,7 @@ export default class LandingPage extends React.Component{
       </div>
   </div>
   <div className="container pb-16 py-16">
-  <h2 className="text-2xl md:text-3xl font-medium text-gray-800 uppercase mb-6">shop by category</h2>
+  <h2 className="text-2xl md:text-3xl font-medium text-gray-800 uppercase mb-6">Famous cities in morocco</h2>
   <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-3">
       <div className="relative group rounded-sm overflow-hidden">
           <img alt="" src={require('../Assets/images/Rabat.jpg')} className="w-full"/>

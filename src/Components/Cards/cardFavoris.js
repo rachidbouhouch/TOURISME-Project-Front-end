@@ -1,8 +1,8 @@
 import React from 'react';
 
-function cardFavoris() {
+export default function cardFavoris() {
     return (
-        <div class="space-y-4">
+        
         <div
         class="flex items-center md:justify-between gap-4 md:gap-6 p-4 border border-gray-200 rounded flex-wrap md:flex-nowrap">
         <div class="w-60 flex-shrink-0">
@@ -20,9 +20,8 @@ function cardFavoris() {
         </div>
         
     </div>
-</div>
     );
   }
   
-  export default cardFavoris;
+
   

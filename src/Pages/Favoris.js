@@ -1,11 +1,12 @@
 import React from "react";
-import cardFavoris from "../Components/Cards/cardFavoris";
+import CardFavoris from "../Components/Cards/cardFavoris";
+
+
 export default class Favoris extends React.Component{
     
     render(){
         return(
             <>
-            <cardFavoris></cardFavoris>
             <div className="py-4 container flex gap-3 items-center">
         <a href="index.html" className="text-primary text-base">
             <i className="fas fa-home"></i>
@@ -17,6 +18,11 @@ export default class Favoris extends React.Component{
         <div class="xl:col-span-9 lg:col-span-8">
             <div class="bg-gray-200 py-2 pl-12 pr-20 xl:pr-28 mb-4 hidden md:flex">
                 <p class="text-gray-600 text-center">Place</p>
+            </div>
+            <div class="space-y-4">
+                <CardFavoris></CardFavoris>
+                <CardFavoris></CardFavoris>
+                <CardFavoris></CardFavoris>     
             </div>
            
         </div>
