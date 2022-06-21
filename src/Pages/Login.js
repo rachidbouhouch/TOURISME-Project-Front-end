@@ -2,11 +2,11 @@ import axios from "axios";
 import React , {useState} from "react";
 import { Link ,useNavigate} from 'react-router-dom';
 import Swal from "sweetalert2";
-
-
+import { useAuth } from "../utils/AuthProvider";
 
 const Login = () => {
-
+   
+    const { setAuth } = useAuth();
     const navigate = useNavigate();
     const [user,setUser] = useState({email:"",password:""})
     const {email,password} = user;
@@ -42,12 +42,14 @@ const Login = () => {
                     'Login Successful',
                     'success'
                   ).then(()=> {
-                    navigate("/", { replace: true });
+                    navigate("/");
+                    setAuth(true)
                       }
                    )
 
             })
             .catch((error)=> {
+                console.log(error)
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',

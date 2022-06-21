@@ -1,9 +1,128 @@
-
-import React from "react";
+import React , { useEffect, useState} from "react";
 import SideBar from "../Components/Cards/sideBar"
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../utils/AuthProvider";
 
-export default class Profile extends React.Component{
-    render(){
+const Profile = () => {
+    const [user , setUser]=useState({})
+    const {firstName,lastName,email,address,password,confirmPassword}=user
+    const navigate = useNavigate();
+    const [token,setToken]=useState(false)
+    const {setAuth} = useAuth();
+
+
+
+     useEffect(()=>{
+        const userCurrent = async () => {
+            const user= await axios.get("/user/me")
+            .then(
+                (res) => {
+                    console.log(res.data.obj)
+                    setUser(res.data.obj);
+                }
+            )
+            .catch(
+                (err)=>{
+                 console.log(err)
+                }
+            )
+        }
+        userCurrent();
+        setToken(localStorage.getItem('token')?true:false)
+
+     },[])
+
+
+     const logout = e => {
+        localStorage.removeItem('token');
+        setToken(false)
+        setAuth(false)
+        navigate("/login", { replace: true });
+
+      }
+    const changeHandler = e => {
+        setUser({...user,[e.target.name]:e.target.value});
+      }
+    const onSubmit = (e)=> {
+        e.preventDefault();
+         if (user.firstName === ""){
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+                text: 'Field first name is required',
+              })
+        }
+        else if ( user.lastName ===""){
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+                text: 'Field last name is required',
+              })
+        }
+        else if (user.email===""){
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+                text: 'Field email is required',
+              })
+        }
+        else if ( user.password === ""){
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+                text: 'Field password is required',
+              })
+        }
+        else if (user.confirmPassword === ""){
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+
+                text: 'Field Confirm password is required',
+              })
+        }
+        else if (user.address === "" ){
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+                text: 'Field address is required',
+              })
+        }        
+        else if (user.password !== user.confirmPassword){
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+                text: 'password and confirm password not equals',
+              })
+        }
+        else {
+            console.log(user)
+            axios.post("user/update",user)
+            .then(e => {
+                Swal.fire(
+                    'Good job!',
+                    'Signup Successful',
+                    'success'
+                  ).then((res)=> {
+                    localStorage.removeItem('token');
+                    navigate("/login", { replace: true });
+
+                  })
+            })
+            .catch(error => {
+                //console.log(error.response)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error.response.data.message ,
+                  })
+            } )
+          
+        }
+    }
+        
         return(
 <>
 <div class="py-4 container flex gap-3 items-center">
@@ -11,13 +130,48 @@ export default class Profile extends React.Component{
         <i class="fas fa-home"></i>
     </a>
     <span class="text-sm text-gray-400"><i class="fas fa-chevron-right"></i></span>
-    <p class="text-gray-600 font-medium uppercase">My Account</p>
+    <p class="text-gray-600 font-medium uppercase"></p>
 </div>
 
 <div class="container lg:grid grid-cols-12 items-start gap-6 pt-4 pb-16">
-    <SideBar></SideBar>
+<div class="col-span-3">
+        <div class="px-4 py-3 shadow flex items-center gap-4">
+            <div class="flex-shrink-0">
+                <img src={require('../Assets/images/avatar.png')} class="rounded-full w-14 h-14 p-1 border border-gray-200 object-cover" alt="" />
+            </div>
+            <div>
+                <p class="text-gray-600">Hello,</p>
+               
+                <h4 class="text-gray-800 capitalize font-medium">Rachid bouhouch
+
+                </h4>
+            </div>
+        </div>
+        <div class="mt-6 bg-white shadow rounded p-4 divide-y divide-gray-200 space-y-4 text-gray-600">
+            <div class="space-y-1 pl-8">
+                <a  href="##"
+                   class="relative text-base font-medium capitalize hover:text-primary transition block">
+                    Manage account
+                    <span class="absolute -left-8 top-0 text-base">
+                            <i class="far fa-address-card"></i>
+                        </span>
+                </a>
+                <a href="##" class="hover:text-primary transition capitalize block text-primary">Profile information</a>
+            </div>
+            <div class="pl-8 pt-4">
+                <button
+                   onClick={logout}
+                   class="relative medium capitalize text-gray-800 font-medium hover:text-primary transition block">
+                    logout
+                    <span class="absolute -left-8 top-0 text-base">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </span>
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="col-span-9 shadow rounded px-6 pt-5 pb-7 mt-6 lg:mt-0">
-        <form action="profileinfo" method="post">
+        <form onSubmit={onSubmit}>
             <h3 class="text-lg font-medium capitalize mb-4">
                 Profile Information
             </h3>
@@ -25,35 +179,15 @@ export default class Profile extends React.Component{
                 <div class="grid sm:grid-cols-2 gap-4">
                     <div>
                         <label class="text-gray-600 mb-2 block">
-                            First Name
+                            first Name
                         </label>
-                        <input type="text" class="input-box" name="prenom" />
+                        <input type="text" class="input-box" name="firstName" value={firstName} onChange={changeHandler} />
                     </div>
                     <div>
                         <label class="text-gray-600 mb-2 block">
                             Last Name
                         </label>
-                        <input type="text" class="input-box" name="nom" />
-                    </div>
-                </div>
-                <div class="grid sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="text-gray-600 mb-2 block">
-                            Cin
-                        </label>
-                        <input type="text" class="input-box" name="cin" />
-                    </div>
-                    <div>
-                        <label class="text-gray-600 mb-2 block">
-                            Ville
-                        </label>
-                        <input type="text" class="input-box" name="ville" />
-                    </div>
-                    <div>
-                        <label class="text-gray-600 mb-2 block">
-                            Pays
-                        </label>
-                        <input type="text" class="input-box" name="pays" />
+                        <input type="text" class="input-box" name="lastName" value={lastName} onChange={changeHandler} />
                     </div>
                 </div>
                 <div class="grid sm:grid-cols-2 gap-4">
@@ -61,13 +195,7 @@ export default class Profile extends React.Component{
                         <label class="text-gray-600 mb-2 block">
                             Email Address <span class="text-primary">*</span>
                         </label>
-                        <input type="email" name="email" class="input-box" required />
-                    </div>
-                    <div>
-                        <label class="text-gray-600 mb-2 block">
-                            Phone Number
-                        </label>
-                        <input type="text" class="input-box" name="telephone" />
+                        <input type="email" name="email" class="input-box" value={email} onChange={changeHandler} />
                     </div>
                 </div>
                 <div class="grid gap-4">
@@ -75,7 +203,7 @@ export default class Profile extends React.Component{
                         <label class="text-gray-600 mb-2 block">
                             Address
                         </label>
-                        <input type="text" name="addresse" class="input-box" />
+                        <input type="text" name="address" class="input-box" value={address} onChange={changeHandler}/>
                     </div>
 
                 </div>
@@ -85,19 +213,11 @@ export default class Profile extends React.Component{
             <div class="space-y-4 max-w-sm">
                 <div>
                     <label class="text-gray-600 mb-2 block">
-                        Current Password <span class="text-primary">*</span>
-                    </label>
-                    <div class="relative">
-                        <input type="password" class="input-box" name="ancienpassword" placeholder="enter current password" required />
-                    </div>
-                </div>
-                <div>
-                    <label class="text-gray-600 mb-2 block">
                         New Password <span class="text-primary">*</span>
                     </label>
                     <div class="relative">
 
-                        <input type="password" class="input-box" name="currentpassword" placeholder="enter new password" required />
+                        <input type="password" class="input-box" name="password" placeholder="enter new password" value={password} onChange={changeHandler} />
                     </div>
                 </div>
                 <div>
@@ -105,18 +225,15 @@ export default class Profile extends React.Component{
                         Confirm Password <span class="text-primary">*</span>
                     </label>
                     <div class="relative">
-                        <input type="password" class="input-box" name="confirmpassword" placeholder="enter confirm password" required />
+                        <input type="password" class="input-box" name="confirmPassword" placeholder="enter confirm password" value={confirmPassword} onChange={changeHandler} />
                     </div>
                 </div>
                 </div>
             </div>
             <div class="mt-6">
                 <button type="submit"
-                        >
-                    <a 
-                    href="##"
-                    alt="" class="px-6 py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium"
-                    >Save change</a>
+                    class="px-6 py-2 text-center text-white bg-primary border border-primary rounded hover:bg-transparent hover:text-primary transition uppercase font-roboto font-medium">
+                    Save change
                 </button>
             </div>
         </form>
@@ -124,6 +241,8 @@ export default class Profile extends React.Component{
 </div>
 </>
 );
-    }
+    
 
 }
+
+export default Profile;

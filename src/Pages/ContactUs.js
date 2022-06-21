@@ -4,9 +4,9 @@ import React from "react";
 export default class ContactUs extends React.Component{
     render(){
         return(
-            <div class="bg-gray-900 w-full h-screen">
+    <div class="bg-gray-900 w-full h-screen">
     <div class="max-w-5xl bg-gray-900 mx-auto px-6 sm:px-6 lg:px-8 mb-12">
-        <div class="bg-gray-900 w-full shadow rounded p-8 sm:p-12">
+        <div class=" w-full shadow rounded p-8 sm:p-12">
             <p class="text-3xl font-bold leading-7 text-center text-white">Contact Us</p>
             <form action="" method="post">
                 <div class="md:flex items-center mt-12">
