@@ -2,9 +2,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import axios from "axios"
 
 const AuthContext = createContext({
-  auth: null,
+  auth: false,
   setAuth: () => {},
-  user: null,
+  user: {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -16,16 +16,16 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const isAuth = async () => {
       try { const res = await axios.get('/user/me',{ withCredentials: true }).then()
-        setUser(res.data);
+        setUser(res.data.obj);
         setAuth(true);
-        console.log(user)
       } catch(error) {
-        setUser(null);
+        setUser({});
         setAuth(false)
       };
     };
 
     isAuth();
+
   },[]);
 
   return (

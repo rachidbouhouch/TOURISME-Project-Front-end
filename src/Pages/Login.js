@@ -7,12 +7,13 @@ import { useAuth } from "../utils/AuthProvider";
 const Login = () => {
    
     const { setAuth } = useAuth();
+    const {userData ,setUser} = useAuth();
     const navigate = useNavigate();
-    const [user,setUser] = useState({email:"",password:""})
+    const [user,setUserData] = useState({email:"",password:""})
     const {email,password} = user;
 
     const changeHandler = e => {
-        setUser({...user,[e.target.name]:e.target.value});
+        setUserData({...user,[e.target.name]:e.target.value});
       }
 
     const submitHandler = e => {
@@ -44,6 +45,7 @@ const Login = () => {
                   ).then(()=> {
                     navigate("/");
                     setAuth(true)
+                    setUser(user)
                       }
                    )
 

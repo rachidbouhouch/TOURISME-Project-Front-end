@@ -1,5 +1,5 @@
-import React from "react";
-import CardFavoris from "../Components/Cards/cardFavoris";
+/*import React from "react";
+import CardFavoris from "../Components/Cards/cardReview";
 
 
 export default class Favoris extends React.Component{
@@ -32,3 +32,4 @@ export default class Favoris extends React.Component{
     }
 
 }
+*/

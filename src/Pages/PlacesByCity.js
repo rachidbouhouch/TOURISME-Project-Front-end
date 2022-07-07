@@ -9,7 +9,7 @@ const PlacesByCity =() =>{
     const [values , setValues]=useState([])
      useEffect(()=>{
         const getPlacesByCityName = async () => {
-            const places = await axios.get("/villes/"+id+"/endroits")
+             await axios.get("/villes/"+id+"/endroits")
             .then(
                 (res) => {
                     setValues(res.data);

@@ -1,38 +1,21 @@
 import React , { useEffect, useState} from "react";
-import SideBar from "../Components/Cards/sideBar"
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthProvider";
 
 const Profile = () => {
-    const [user , setUser]=useState({})
-    const {firstName,lastName,email,address,password,confirmPassword}=user
+    const [userCurrent , setUser]=useState({})
+    const {firstName,lastName,email,address,password,confirmPassword}=userCurrent
     const navigate = useNavigate();
     const [token,setToken]=useState(false)
-    const {setAuth} = useAuth();
-
-
+    const {setAuth,user} = useAuth();
 
      useEffect(()=>{
-        const userCurrent = async () => {
-            const user= await axios.get("/user/me")
-            .then(
-                (res) => {
-                    console.log(res.data.obj)
-                    setUser(res.data.obj);
-                }
-            )
-            .catch(
-                (err)=>{
-                 console.log(err)
-                }
-            )
-        }
-        userCurrent();
+        setUser(user);
         setToken(localStorage.getItem('token')?true:false)
 
-     },[])
+     },[user])
 
 
      const logout = e => {
@@ -43,39 +26,39 @@ const Profile = () => {
 
       }
     const changeHandler = e => {
-        setUser({...user,[e.target.name]:e.target.value});
+        setUser({...userCurrent,[e.target.name]:e.target.value});
       }
     const onSubmit = (e)=> {
         e.preventDefault();
-         if (user.firstName === ""){
+         if (userCurrent.firstName === ""){
             Swal.fire({
                 icon: 'info',
                 title: 'Oops...',
                 text: 'Field first name is required',
               })
         }
-        else if ( user.lastName ===""){
+        else if ( userCurrent.lastName ===""){
             Swal.fire({
                 icon: 'info',
                 title: 'Oops...',
                 text: 'Field last name is required',
               })
         }
-        else if (user.email===""){
+        else if (userCurrent.email===""){
             Swal.fire({
                 icon: 'info',
                 title: 'Oops...',
                 text: 'Field email is required',
               })
         }
-        else if ( user.password === ""){
+        else if ( userCurrent.password === ""){
             Swal.fire({
                 icon: 'info',
                 title: 'Oops...',
                 text: 'Field password is required',
               })
         }
-        else if (user.confirmPassword === ""){
+        else if (userCurrent.confirmPassword === ""){
             Swal.fire({
                 icon: 'info',
                 title: 'Oops...',
@@ -83,14 +66,14 @@ const Profile = () => {
                 text: 'Field Confirm password is required',
               })
         }
-        else if (user.address === "" ){
+        else if (userCurrent.address === "" ){
             Swal.fire({
                 icon: 'info',
                 title: 'Oops...',
                 text: 'Field address is required',
               })
         }        
-        else if (user.password !== user.confirmPassword){
+        else if (userCurrent.password !== userCurrent.confirmPassword){
             Swal.fire({
                 icon: 'info',
                 title: 'Oops...',
@@ -98,18 +81,14 @@ const Profile = () => {
               })
         }
         else {
-            console.log(user)
-            axios.post("user/update",user)
+            console.log(userCurrent)
+            axios.post("user/update",userCurrent)
             .then(e => {
                 Swal.fire(
                     'Good job!',
-                    'Signup Successful',
+                    'Informations updated',
                     'success'
-                  ).then((res)=> {
-                    localStorage.removeItem('token');
-                    navigate("/login", { replace: true });
-
-                  })
+                  )
             })
             .catch(error => {
                 //console.log(error.response)

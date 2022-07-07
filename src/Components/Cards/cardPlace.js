@@ -9,7 +9,7 @@ function cardPlace({places ,id}) {
     const [cityName , setCityName]=useState();
     useEffect(()=>{
         const getCityById = async () => {
-            const data = await axios.get("/villes/"+id)
+            await axios.get("/villes/"+id)
             .then(
                 (res) => {
                     setCityName(res.data.villename);
@@ -26,7 +26,7 @@ function cardPlace({places ,id}) {
      },[])
 
      const ratingAvg = (ratingAverge)=> {
-        if (ratingAverge == 0.0) {
+        if (ratingAverge === 0.0) {
             return "0 Star";
         }
         else if (ratingAverge<=1.0){
@@ -74,10 +74,11 @@ function cardPlace({places ,id}) {
                return <img alt="" src={require(`../../Assets/images/${index}`)} className="w-full" />
 
             }
+            return ""
          }); }
     }
 
-    return places.length == 0 ? "There is no places" :places.map((place)=> {
+    return places.length === 0 ? "There is no places" :places.map((place)=> {
         return (
             <div key={place.id}>
             <div className="group rounded bg-white shadow overflow-hidden">

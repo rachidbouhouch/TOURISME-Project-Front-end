@@ -39,7 +39,7 @@ export default function LandingPage() {
         
     }
      else {
-        const message = await axios.post("/messages", contact)
+         await axios.post("/messages", contact)
         .then(
             ()=> {
                 Swal.fire({

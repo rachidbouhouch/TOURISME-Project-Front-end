@@ -2,7 +2,7 @@ import './App.css';
 import "./Assets/css/tailwind.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-import React ,{useEffect,useState}  from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -17,7 +17,6 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 import PlacesByCity from './Pages/PlacesByCity';
 import DetailsPlace from "./Pages/DetailsPlace";
-import Favoris from "./Pages/Favoris";
 import Profile from "./Pages/Profile";
 import ProtectedRoutes from './utils/ProtectedRoutes';
 import AllPlaces from './Pages/AllPlaces';
@@ -32,7 +31,6 @@ export default function App() {
         <Route path="places" element={<AllPlaces />} />
         <Route path="city/:id/places" element={<PlacesByCity />} />
         <Route path="city/:id/places/:id" element={<DetailsPlace />} />
-        <Route path="favoris" element={<Favoris />} />
         <Route path="profile" element={<Profile/>} />
         </Route>
         <Route element={<Home/>} path="/" exact/>
