@@ -11,6 +11,10 @@ function DetailsPlace({cityName}){
     const [reviews,setReviews]=useState([])
     const {user}=useAuth();
     const [showModal, setShowModal] = useState(false);
+    const [reviewUpdated , setReviewUpdated]=useState({
+      contenu : "",
+      rating: 0.0,
+    })
 
     const [review , setReview]=useState({
         contenu : "",
@@ -23,8 +27,10 @@ function DetailsPlace({cityName}){
 
       const changeHandler = e => {
         setReview({...review,[e.target.name]:e.target.value});
+      }
 
-
+      const changeReviewUpdated = e => {
+        setReviewUpdated({...reviewUpdated,[e.target.name]:e.target.value});
       }
       
       useEffect(()=>{
@@ -232,7 +238,7 @@ function DetailsPlace({cityName}){
           >
             <div className="relative w-auto my-6 mx-auto w-60">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
@@ -242,25 +248,24 @@ function DetailsPlace({cityName}){
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                     onClick={() => setShowModal(false)}
                   >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                    <span className="text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
                       ×
                     </span>
                   </button>
                 </div>
-               <div className="mt-3 p-3 w-full">
-      <textarea onChange={changeHandler} value={review.contenu} rows="3" className="border p-2 rounded w-full" name="contenu" placeholder="Write something..."></textarea>
-    </div>
-     <div className="flex justify-center">
-                
+                <form>
+               <div className="mt-3 p-3">
+               <textarea rows="3" className="border p-2 rounded w-full" name="contenu" placeholder="Write something..."></textarea>
+               </div>
+             <div className="flex justify-center mb-6">           
                 <input type="number"
                    name="rating"
                    placeholder="Review"
                    min="0.0"
                    max="5.0"
-                   value={review.rating}
-                   onChange={changeHandler}
                    step="0.1"
                    className="placeholder-black text-black px-8 py-3 font-medium rounded-md uppercase" />
+
             </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
@@ -276,8 +281,9 @@ function DetailsPlace({cityName}){
                     onClick={() => setShowModal(false)}
                   >
                     Save Changes
-                  </button>
+                  </button>  
                 </div>
+                </form>
               </div>
             </div>
           </div>

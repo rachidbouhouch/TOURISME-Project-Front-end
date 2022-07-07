@@ -31,22 +31,6 @@ const Header = () => {
               className="w-full"
             />
           </a>
-          <div className="w-full xl:max-w-xl lg:max-w-lg lg:flex relative hidden">
-            <span className="absolute left-4 top-3 text-lg text-gray-400">
-              <i className="fas fa-search"></i>
-            </span>
-            <input
-              type="text"
-              className="pl-12 w-full border border-r-0 border-primary py-3 px-3 rounded-l-md focus:ring-primary focus:border-primary"
-              placeholder="search"
-            />
-            <Link
-              to="listplaces"
-              className="bg-primary border border-primary text-white px-8 py-4 font-medium rounded-r-md hover:bg-transparent hover:text-primary transition"
-            >
-              Search
-            </Link>
-          </div>
 
         </div>
       </header>

@@ -68,17 +68,6 @@ export default function LandingPage() {
         className="bg-cover bg-no-repeat bg-center py-36 relative"
         style={sectionStyle}
       >
-        <div className="container">
-          <h1 className="xl:text-6xl md:text-5xl text-4xl text-gray-800 font-medium mb-4">
-            Best Collection For <br className="hidden sm:block" /> Home
-            Decoration
-          </h1>
-          <p className="text-base text-gray-600 leading-6">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa{" "}
-            <br className="hidden sm:block" />
-            assumenda aliquid inventore nihil laboriosam odio
-          </p>
-        </div>
       </div>
       <div className="container py-14">
         <h1 className="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800">
