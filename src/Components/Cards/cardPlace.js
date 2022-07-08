@@ -2,14 +2,14 @@ import React ,{useEffect, useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 function cardPlace({places ,id}) {
-
+    const BASE_URL = "api";
    const GetPlaces = () => {
     const navigate = useNavigate();
     console.log(places)
     const [cityName , setCityName]=useState();
     useEffect(()=>{
         const getCityById = async () => {
-            await axios.get("/villes/"+id)
+            await axios.get(BASE_URL+"/villes/"+id)
             .then(
                 (res) => {
                     setCityName(res.data.villename);

@@ -7,6 +7,7 @@ const AuthContext = createContext({
   user: {},
 });
 
+const BASE_URL = "api";
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
@@ -15,7 +16,7 @@ const AuthProvider = ({ children }) => {
   
   useEffect(() => {
     const isAuth = async () => {
-      try { const res = await axios.get('/user/me',{ withCredentials: true }).then()
+      try { const res = await axios.get(BASE_URL+'/user/me',{ withCredentials: true }).then()
         setUser(res.data.obj);
         setAuth(true);
       } catch(error) {

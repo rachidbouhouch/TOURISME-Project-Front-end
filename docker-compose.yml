@@ -1,0 +1,46 @@
+version: '3.1'
+services:
+
+  db:
+    image: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: nemodb
+    volumes:
+      - nemo_mysql:/var/lib/mysql
+    container_name: mysql_nemo_db
+
+  backend:
+    build: 
+      context: ../projetsprings2
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    container_name: spring_backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/projetsprings2
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+  
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    container_name: react_frontend
+    restart: unless-stopped
+
+  proxy:
+    image: nginx
+    restart: unless-stopped
+    container_name: reverse_proxy
+    ports:
+      - "8081:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d
+
+
+volumes:
+  nemo_mysql:

@@ -4,8 +4,10 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import CardReview from "../Components/Cards/CardReview";
 import { useAuth } from "../utils/AuthProvider";
+
  
 function DetailsPlace({cityName}){
+    const BASE_URL = "api";
     const { id } = useParams();
     const [place , setPlace]=useState({})
     const [reviews,setReviews]=useState([])
@@ -35,7 +37,7 @@ function DetailsPlace({cityName}){
       
       useEffect(()=>{
         const getPlaceDetails = async () => {
-            await axios.get("/endroits/"+id)
+            await axios.get(BASE_URL+"/endroits/"+id)
             .then(
                 (res) => {
                     setPlace(res.data);
@@ -61,7 +63,7 @@ function DetailsPlace({cityName}){
 
         }
             const postReview = async () => {
-                 await axios.post("/endroits/"+id+"/reviews",review)
+                 await axios.post(BASE_URL+"/endroits/"+id+"/reviews",review)
                 .then(
                     (res) => {
                         Swal.fire(
@@ -313,7 +315,7 @@ function DetailsPlace({cityName}){
           }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                axios.delete("/reviews/"+id).then(res =>{
+                axios.delete(BASE_URL+"/reviews/"+id).then(res =>{
                 Swal.fire('Saved!', '', 'success')
                 const review = reviews.filter(item => item.id !== id);  
                 setReviews(review);

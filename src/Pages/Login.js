@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useAuth } from "../utils/AuthProvider";
 
 const Login = () => {
-   
+    const BASE_URL = "api/";
     const { setAuth } = useAuth();
     const {userData ,setUser} = useAuth();
     const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Login = () => {
         }
         else {
             console.log(user)
-            axios.post("user/login",user)
+            axios.post(BASE_URL+"user/login",user)
             .then((e)=> {
                 //console.log(JSON.stringify(e.data));
                 localStorage.setItem('token',e.data.token);

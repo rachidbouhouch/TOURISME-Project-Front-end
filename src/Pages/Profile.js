@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthProvider";
 
 const Profile = () => {
+    const BASE_URL = "api/";
     const [userCurrent , setUser]=useState({})
     const {firstName,lastName,email,address,password,confirmPassword}=userCurrent
     const navigate = useNavigate();
@@ -82,7 +83,7 @@ const Profile = () => {
         }
         else {
             console.log(userCurrent)
-            axios.post("user/update",userCurrent)
+            axios.post(BASE_URL+"user/update",userCurrent)
             .then(e => {
                 Swal.fire(
                     'Good job!',

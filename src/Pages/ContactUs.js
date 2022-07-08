@@ -2,6 +2,7 @@ import React from "react";
 
 
 export default class ContactUs extends React.Component{
+    
     render(){
         return(
     <div class="bg-gray-900 w-full h-screen">

@@ -7,9 +7,10 @@ import Pagination from "../Components/Pagination/Pagination";
 const PlacesByCity =() =>{
     const { id } = useParams();
     const [values , setValues]=useState([])
+    const BASE_URL = "api";
      useEffect(()=>{
         const getPlacesByCityName = async () => {
-             await axios.get("/villes/"+id+"/endroits")
+             await axios.get(BASE_URL+"/villes/"+id+"/endroits")
             .then(
                 (res) => {
                     setValues(res.data);

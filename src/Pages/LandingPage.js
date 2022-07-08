@@ -10,6 +10,7 @@ var sectionStyle = {
 };
 
 export default function LandingPage() {
+  const BASE_URL = "api";
   const { auth } = useAuth();
   const [contact, setContact] = useState({
     firstName: "",
@@ -39,7 +40,7 @@ export default function LandingPage() {
         
     }
      else {
-         await axios.post("/messages", contact)
+         await axios.post(BASE_URL+"/messages", contact)
         .then(
             ()=> {
                 Swal.fire({

@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 function Register(){
-    
+    const BASE_URL = "api/";
     const navigate = useNavigate();
     const [newUser,setUser] = useState( {
         firstName : "",
@@ -79,7 +79,7 @@ function Register(){
         }
         else {
             console.log(newUser)
-            axios.post("user/signup",newUser)
+            axios.post(BASE_URL+"user/signup",newUser)
             .then(e => {
                 Swal.fire(
                     'Good job!',

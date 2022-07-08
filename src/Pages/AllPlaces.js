@@ -5,11 +5,12 @@ import axios from "axios";
 import Pagination from "../Components/Pagination/Pagination";
 
 const AllPlaces =() =>{
+    const BASE_URL = "api";
     const navigate=useNavigate();
     const [values , setValues]=useState([])
     //const [sort,setSort]=useState("Default Sorting")
     const getAllPlaces = async () => {
-        const places = await axios.get("/endroits")
+        const places = await axios.get(BASE_URL+"/endroits")
         .then(
             (res) => {
                 
@@ -36,7 +37,7 @@ const AllPlaces =() =>{
         }
         else if (event.target.value === "name"){
             const getAllPlacesByName = async () => {
-                const places = await axios.get("/endroits/all/sorting?sortBy=name")
+                const places = await axios.get(BASE_URL+"/endroits/all/sorting?sortBy=name")
                 .then(
                     (res) => {
                         console.log(res.data)
