@@ -7,7 +7,7 @@ import { useAuth } from "../utils/AuthProvider";
 
  
 function DetailsPlace({cityName}){
-    const BASE_URL = "api";
+    const BASE_URL = "/api";
     const { id } = useParams();
     const [place , setPlace]=useState({})
     const [reviews,setReviews]=useState([])
@@ -25,7 +25,6 @@ function DetailsPlace({cityName}){
         nameUser:null
 
       })
-
 
       const changeHandler = e => {
         setReview({...review,[e.target.name]:e.target.value});
@@ -257,7 +256,7 @@ function DetailsPlace({cityName}){
                 </div>
                 <form>
                <div className="mt-3 p-3">
-               <textarea rows="3" className="border p-2 rounded w-full" name="contenu" placeholder="Write something..."></textarea>
+               <textarea rows="3" value={review.contenu} onChange={changeReviewUpdated} className="border p-2 rounded w-full" name="contenu" placeholder="Write something..."></textarea>
                </div>
              <div className="flex justify-center mb-6">           
                 <input type="number"
@@ -280,7 +279,7 @@ function DetailsPlace({cityName}){
                   <button
                    className="px-4 py-1 bg-gray-800 text-white rounded font-light hover:bg-gray-700"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => UpdateReview(reviewUpdated,review.idUser)}
                   >
                     Save Changes
                   </button>  
@@ -303,6 +302,8 @@ function DetailsPlace({cityName}){
             )
         })
        }
+
+         
        const handleClick = (id) => (event) =>{ event.preventDefault()
         RemoveReview(id)};
 
@@ -324,7 +325,7 @@ function DetailsPlace({cityName}){
           })            
        }
 
-       const UpdateReview =  (review)=> {
+       const UpdateReview =  (reviewUpdated,id)=> {
         Swal.fire({
             title: 'Update Review',
             input: 'text',
@@ -334,28 +335,24 @@ function DetailsPlace({cityName}){
             showCancelButton: true,
             confirmButtonText: 'Update',
             showLoaderOnConfirm: true,
-            preConfirm: (login) => {
-              return fetch(`//api.github.com/users/${login}`)
+            preConfirm: () => {
+              return axios.post(BASE_URL+"/reviews/"+id,reviewUpdated)
                 .then(response => {
-                  if (!response.ok) {
-                    throw new Error(response.statusText)
-                  }
-                  return response.json()
+                  Swal.fire(
+                    'Good job!',
+                    'Login Successful',
+                    'success'
+                  )
                 })
                 .catch(error => {
-                  Swal.showValidationMessage(
-                    `Request failed: ${error}`
-                  )
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something wrong' ,
+                  })
                 })
             },
             allowOutsideClick: () => !Swal.isLoading()
-          }).then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire({
-                title: `${result.value.login}'s avatar`,
-                imageUrl: result.value.avatar_url
-              })
-            }
           })
                      
        }
@@ -411,7 +408,7 @@ function DetailsPlace({cityName}){
             <div className="flex space-x-3 mt-4">
                 {
                  place.videoLink == null ? "No video Link" :  <a href={place.videoLink}
-                 className="text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center">
+                 className="text-gray-400 hover:text-gray-500 h-12 w-12 rounded-full border border-gray-300 flex items-center justify-center">
                  <i className="fab fa-youtube"></i>
              </a>
               
@@ -419,26 +416,6 @@ function DetailsPlace({cityName}){
                 
             </div>
             <div class="flex justify-center mt-8">
-        <div class="m-4">
-            <label class="inline-block mb-2 text-gray-500">Upload
-                Image(jpg,png,svg,jpeg)</label>
-            <div class="flex items-center justify-center w-full">
-                <label class="flex flex-col w-full h-32 border-4 border-dashed hover:bg-gray-100 hover:border-gray-300">
-                    <div class="flex flex-col items-center justify-center pt-7">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-12 h-12 text-gray-400 group-hover:text-gray-600" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path fillRule="evenodd"
-                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                clipRule="evenodd" />
-                        </svg>
-                        <p class="pt-1 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                            Select a photo</p>
-                    </div>
-                    <input type="file" class="opacity-0" />
-                </label>
-            </div>
-        </div>
     </div>
         </div>
     </div>

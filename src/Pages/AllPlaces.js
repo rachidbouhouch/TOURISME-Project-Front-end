@@ -5,7 +5,7 @@ import axios from "axios";
 import Pagination from "../Components/Pagination/Pagination";
 
 const AllPlaces =() =>{
-    const BASE_URL = "api";
+    const BASE_URL = "/api";
     const navigate=useNavigate();
     const [values , setValues]=useState([])
     //const [sort,setSort]=useState("Default Sorting")

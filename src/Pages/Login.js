@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useAuth } from "../utils/AuthProvider";
 
 const Login = () => {
-    const BASE_URL = "api/";
+    const BASE_URL = "/api/";
     const { setAuth } = useAuth();
     const {userData ,setUser} = useAuth();
     const navigate = useNavigate();

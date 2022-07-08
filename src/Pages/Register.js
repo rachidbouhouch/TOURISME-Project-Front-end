@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 function Register(){
-    const BASE_URL = "api/";
+    const BASE_URL = "/api/";
     const navigate = useNavigate();
     const [newUser,setUser] = useState( {
         firstName : "",

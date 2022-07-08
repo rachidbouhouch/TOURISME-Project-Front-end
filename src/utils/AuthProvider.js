@@ -7,7 +7,7 @@ const AuthContext = createContext({
   user: {},
 });
 
-const BASE_URL = "api";
+const BASE_URL = "/api";
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {

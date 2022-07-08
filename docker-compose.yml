@@ -19,7 +19,7 @@ services:
       - db
     container_name: spring_backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/projetsprings2
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/projetsprings2?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
   
@@ -39,7 +39,7 @@ services:
     ports:
       - "8081:80"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d
+      - ./default.conf:/etc/nginx/conf.d/default.conf
 
 
 volumes:

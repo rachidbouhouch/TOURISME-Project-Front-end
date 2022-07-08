@@ -10,7 +10,7 @@ var sectionStyle = {
 };
 
 export default function LandingPage() {
-  const BASE_URL = "api";
+  const BASE_URL = "/api";
   const { auth } = useAuth();
   const [contact, setContact] = useState({
     firstName: "",

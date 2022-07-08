@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../utils/AuthProvider";
 
 const Profile = () => {
-    const BASE_URL = "api/";
+    const BASE_URL = "/api/";
     const [userCurrent , setUser]=useState({})
     const {firstName,lastName,email,address,password,confirmPassword}=userCurrent
     const navigate = useNavigate();
