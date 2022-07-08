@@ -265,6 +265,7 @@ function DetailsPlace({cityName}){
                    min="0.0"
                    max="5.0"
                    step="0.1"
+                   value={review.rating}
                    className="placeholder-black text-black px-8 py-3 font-medium rounded-md uppercase" />
 
             </div>
