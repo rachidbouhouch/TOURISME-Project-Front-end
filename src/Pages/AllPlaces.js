@@ -10,7 +10,7 @@ const AllPlaces =() =>{
     const [values , setValues]=useState([])
     //const [sort,setSort]=useState("Default Sorting")
     const getAllPlaces = async () => {
-        const places = await axios.get(BASE_URL+"/endroits")
+        await axios.get(BASE_URL+"/endroits")
         .then(
             (res) => {
                 
@@ -37,7 +37,7 @@ const AllPlaces =() =>{
         }
         else if (event.target.value === "name"){
             const getAllPlacesByName = async () => {
-                const places = await axios.get(BASE_URL+"/endroits/all/sorting?sortBy=name")
+                await axios.get(BASE_URL+"/endroits/all/sorting?sortBy=name")
                 .then(
                     (res) => {
                         console.log(res.data)
@@ -57,7 +57,7 @@ const AllPlaces =() =>{
      const GetPlaces = () => {
         console.log(values)
          const ratingAvg = (ratingAverge)=> {
-            if (ratingAverge == 0.0) {
+            if (ratingAverge === 0.0) {
                 return "0 Star";
             }
             else if (ratingAverge<=1.0){
